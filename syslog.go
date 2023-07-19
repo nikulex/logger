@@ -7,11 +7,13 @@ import (
 )
 
 type SyslogOutConfig struct {
+	Enabled  bool   `json:"enabled" yaml:"enabled"`
 	Facility string `json:"facility" yaml:"facility"`
 	Tag      string `json:"tag" yaml:"tag"`
 }
 
 var DefaultSyslogOutConfig = &SyslogOutConfig{
+	Enabled:  true,
 	Facility: "daemon",
 	Tag:      "",
 }

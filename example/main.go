@@ -44,12 +44,14 @@ func initLogger() *logger.Logger {
 	}
 	mystdlog := stdlog.New(io.MultiWriter(os.Stdout, logfile), "", stdlog.LstdFlags)
 	std := logger.NewStdOut(mystdlog, &logger.StdOutConfig{
+		Enabled:    true,
 		LogLevel:   logger.NewLevel("info"),
 		ForceDebug: true, // печатает сообщения с логлевелом debug вне зависимости от настроек логлевела
 	})
 
 	// простой файл со всеми левелами
 	fileout, err := logger.NewFileOut(&logger.FileOutConfig{
+		Enabled:  true,
 		FilePath: "myservice.all.log",
 		LFlags:   stdlog.LstdFlags,
 	})
@@ -59,6 +61,7 @@ func initLogger() *logger.Logger {
 
 	// запись через syslog демон
 	syslog, err := logger.NewSyslogOut(&logger.SyslogOutConfig{
+		Enabled:  true,
 		Facility: "user", // текстовая версия facility в syslog.Priority
 		Tag:      "myservice",
 	})
@@ -68,6 +71,7 @@ func initLogger() *logger.Logger {
 
 	// в модуле clickhouse используется stdout модуль через уже существующий логгер
 	clickhouse, err := logger.NewClickhouseOut(&logger.ClickhouseOutConfig{
+		Enabled:        true,
 		ClickhouseAddr: "tcp://localhost:9000",
 		Database:       "default",
 		Username:       "",

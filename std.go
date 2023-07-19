@@ -5,11 +5,13 @@ import (
 )
 
 type StdOutConfig struct {
+	Enabled    bool  `json:"enabled" yaml:"enabled"`
 	LogLevel   Level `json:"logLevel" yaml:"logLevel"`
 	ForceDebug bool  `json:"forceDebug" yaml:"forceDebug"`
 }
 
 var DefaultStdOutConfig *StdOutConfig = &StdOutConfig{
+	Enabled:    true,
 	LogLevel:   LevelError,
 	ForceDebug: false,
 }

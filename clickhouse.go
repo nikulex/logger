@@ -11,6 +11,7 @@ import (
 )
 
 type ClickhouseOutConfig struct {
+	Enabled        bool          `json:"enabled" yaml:"enabled"`
 	ClickhouseAddr string        `json:"clickhouseAddr" yaml:"clickhouseAddr"`
 	Database       string        `json:"database" yaml:"database"`
 	Username       string        `json:"username" yaml:"username"`
@@ -21,7 +22,8 @@ type ClickhouseOutConfig struct {
 	BatchBuffer    int           `json:"batchBuffer" yaml:"batchBuffer"`
 }
 
-var DefaultClickhouseConfig = &ClickhouseOutConfig{
+var DefaultClickhouseConfig = ClickhouseOutConfig{
+	Enabled:        true,
 	ClickhouseAddr: "tcp://localhost:9000",
 	Database:       "default",
 	Username:       "",
@@ -82,7 +84,7 @@ func getServerName() (string, error) {
 
 func NewClickhouseOut(cfg *ClickhouseOutConfig) (*ClickhouseOut, error) {
 	if cfg == nil {
-		cfg = DefaultClickhouseConfig
+		cfg = &DefaultClickhouseConfig
 	}
 
 	connstr := fmt.Sprintf("%s?database=%v&write_timeout=%v",

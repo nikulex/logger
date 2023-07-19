@@ -7,11 +7,13 @@ import (
 )
 
 type FileOutConfig struct {
+	Enabled  bool   `json:"enabled" yaml:"enabled"`
 	FilePath string `json:"filePath" yaml:"filePath"`
 	LFlags   int    `json:"lflags" yaml:"lflags"`
 }
 
 var DefaultFileOutConfig = &FileOutConfig{
+	Enabled:  true,
 	FilePath: filepath.Base(os.Args[0]) + ".log",
 	LFlags:   log.LstdFlags,
 }
