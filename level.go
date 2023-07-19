@@ -42,13 +42,13 @@ func (l Level) String() string {
 func (l Level) Prefix() string {
 	switch l {
 	case LevelDebug:
-		return "\x1b[3;30mDBG\x1b[0m"
+		return "\x1b[1;30mDBG\x1b[0m"
 	case LevelInfo:
-		return "\x1b[3;32mINF\x1b[0m"
+		return "\x1b[1;32mINF\x1b[0m"
 	case LevelWarn:
-		return "\x1b[3;33mWRN\x1b[0m"
+		return "\x1b[1;33mWRN\x1b[0m"
 	case LevelError:
-		return "\x1b[3;34mERR\x1b[0m"
+		return "\x1b[1;34mERR\x1b[0m"
 	}
 	return ""
 }
