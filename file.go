@@ -39,7 +39,7 @@ func (l *FileOut) Close() error {
 }
 
 func (l *FileOut) log(level Level, s string, i *info) {
-	l.l.Print(format(level, s, i))
+	l.l.Print(format(level, false, s, i))
 }
 
 func (l *FileOut) init(main *Logger) {

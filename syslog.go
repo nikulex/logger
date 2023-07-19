@@ -54,7 +54,7 @@ func (l *SyslogOut) levelFunc(level Level) func(string) error {
 }
 
 func (l *SyslogOut) log(level Level, s string, i *info) {
-	msg := format(level, s, i)
+	msg := format(level, false, s, i)
 	if err := l.levelFunc(level)(msg); err != nil {
 		l.std.Errorf("syslog write error: %v", err)
 	}

@@ -21,7 +21,7 @@ type info struct {
 	prefix string
 }
 
-func format(l Level, s string, i *info) string {
+func format(l Level, colored bool, s string, i *info) string {
 	var prefix, params, sep string
 	if len(i.prefix) > 0 {
 		prefix = fmt.Sprintf("(%s)", i.prefix)
@@ -32,7 +32,13 @@ func format(l Level, s string, i *info) string {
 	if len(prefix)+len(params) > 0 {
 		sep = ":"
 	}
-	return fmt.Sprintf("[%s]%s%v%s %s", l.Prefix(), prefix, params, sep, s)
+	var loglevel string
+	if colored {
+		loglevel = l.PrefixColor()
+	} else {
+		loglevel = l.Prefix()
+	}
+	return fmt.Sprintf("[%s]%s%v%s %s", loglevel, prefix, params, sep, s)
 }
 
 type internal interface {

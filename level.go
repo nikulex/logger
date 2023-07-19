@@ -42,6 +42,20 @@ func (l Level) String() string {
 func (l Level) Prefix() string {
 	switch l {
 	case LevelDebug:
+		return "DBG"
+	case LevelInfo:
+		return "INF"
+	case LevelWarn:
+		return "WRN"
+	case LevelError:
+		return "ERR"
+	}
+	return ""
+}
+
+func (l Level) PrefixColor() string {
+	switch l {
+	case LevelDebug:
 		return "\x1b[1;30mDBG\x1b[0m"
 	case LevelInfo:
 		return "\x1b[1;32mINF\x1b[0m"

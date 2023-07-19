@@ -50,6 +50,6 @@ func (l *StdOut) flush() {
 
 func (l *StdOut) log(level Level, s string, i *info) {
 	if level >= l.cfg.LogLevel || (level == LevelDebug && l.cfg.ForceDebug) {
-		l.l.Print(format(level, s, i))
+		l.l.Print(format(level, true, s, i))
 	}
 }
