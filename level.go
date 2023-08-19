@@ -62,7 +62,7 @@ func (l Level) PrefixColor() string {
 	case LevelWarn:
 		return "\x1b[1;33mWRN\x1b[0m"
 	case LevelError:
-		return "\x1b[1;34mERR\x1b[0m"
+		return "\x1b[1;31mERR\x1b[0m"
 	}
 	return ""
 }
