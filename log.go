@@ -73,7 +73,7 @@ func NewLogger(outs ...LoggerOut) *Logger {
 	}
 	// required stdout logger
 	if _, ok := main.outs["std"]; !ok {
-		out := NewStdOut(nil, nil)
+		out := NewStdOut(nil)
 		out.init(main)
 		main.outs[out.name()] = out
 	}
@@ -106,13 +106,26 @@ func (l *Logger) New(name string) *Logger {
 	}
 }
 
+type Param struct {
+	Name  string
+	Value interface{}
+}
+
+func (l *Logger) Params(params ...Param) *Logger {
+	paramsMap := make(Params)
+	for _, p := range params {
+		paramsMap[p.Name] = p.Value
+	}
+	return l.ParamsMap(paramsMap)
+}
+
 // sublogger with params
-func (l *Logger) Params(params Params) *Logger {
+func (l *Logger) ParamsMap(params map[string]interface{}) *Logger {
 	child := &Logger{
 		BaseLogger: BaseLogger{
 			internal: l.internal,
 			info: &info{
-				params: make(Params),
+				params: make(Params, len(l.params)+len(params)),
 				prefix: l.prefix,
 			},
 		},

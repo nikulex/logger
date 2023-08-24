@@ -2,7 +2,6 @@ package logger
 
 import (
 	"fmt"
-	stdlog "log"
 )
 
 type Config struct {
@@ -15,7 +14,7 @@ type Config struct {
 
 func (cfg *Config) NewLogger() (*Logger, error) {
 	outs := make([]LoggerOut, 0)
-	outs = append(outs, NewStdOut(stdlog.Default(), &StdOutConfig{
+	outs = append(outs, NewStdOut(&StdOutConfig{
 		LogLevel:   NewLevel(cfg.LogLevel),
 		ForceDebug: cfg.ForceDebug,
 	}))

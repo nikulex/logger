@@ -2,6 +2,7 @@ package logger
 
 import (
 	"log"
+	"os"
 )
 
 type StdOutConfig struct {
@@ -17,19 +18,18 @@ var DefaultStdOutConfig *StdOutConfig = &StdOutConfig{
 }
 
 type StdOut struct {
-	l   *log.Logger
+	out *log.Logger
+	err *log.Logger
 	cfg *StdOutConfig
 }
 
-func NewStdOut(l *log.Logger, cfg *StdOutConfig) *StdOut {
-	if l == nil {
-		l = log.Default()
-	}
+func NewStdOut(cfg *StdOutConfig) *StdOut {
 	if cfg == nil {
 		cfg = DefaultStdOutConfig
 	}
 	return &StdOut{
-		l:   l,
+		out: log.New(os.Stdout, "", log.LstdFlags),
+		err: log.New(os.Stderr, "", log.LstdFlags),
 		cfg: cfg,
 	}
 }
@@ -50,6 +50,10 @@ func (l *StdOut) flush() {
 
 func (l *StdOut) log(level Level, s string, i *info) {
 	if level >= l.cfg.LogLevel || (level == LevelDebug && l.cfg.ForceDebug) {
-		l.l.Print(format(level, true, s, i))
+		if level == LevelError {
+			l.err.Print(format(level, true, s, i))
+		} else {
+			l.out.Print(format(level, true, s, i))
+		}
 	}
 }

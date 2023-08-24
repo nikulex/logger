@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	stdlog "log"
-	"os"
 	"time"
 
 	"github.com/nikulex/logger"
@@ -24,9 +22,9 @@ func main() {
 	subsublog.Infoln("hello subsublog")
 
 	// можно добавить параметры рядом с префиксом
-	withParams := sublog.Params(logger.Params{"test": 100})
+	withParams := sublog.Params(logger.Param{"test", 100})
 	withParams.Infoln("Hello with params")
-	withParams.Params(logger.Params{"some": "hello"}).Infoln("Hello with params 2")
+	withParams.Params(logger.Param{"some", "hello"}).Infoln("Hello with params 2")
 
 	// можно использовать конкретный модуль
 	sublog.Get("clickhouse").Warnln("what happend???")
@@ -38,12 +36,7 @@ func main() {
 
 func initLogger() *logger.Logger {
 	// пример настройки стандартного логгера
-	logfile, err := os.OpenFile("myservice.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		stdlog.Fatal(err)
-	}
-	mystdlog := stdlog.New(io.MultiWriter(os.Stdout, logfile), "", stdlog.LstdFlags)
-	std := logger.NewStdOut(mystdlog, &logger.StdOutConfig{
+	std := logger.NewStdOut(&logger.StdOutConfig{
 		Enabled:    true,
 		LogLevel:   logger.NewLevel("info"),
 		ForceDebug: true, // печатает сообщения с логлевелом debug вне зависимости от настроек логлевела
