@@ -22,15 +22,20 @@ type info struct {
 }
 
 func format(l Level, colored bool, s string, i *info) string {
-	var prefix, params, sep string
+	var prefix, params string
 	if len(i.prefix) > 0 {
-		prefix = fmt.Sprintf("(%s)", i.prefix)
+		if colored {
+			prefix = fmt.Sprintf("\x1b[0;30m (%s)\x1b[0m", i.prefix)
+		} else {
+			prefix = fmt.Sprintf(" (%s)", i.prefix)
+		}
 	}
 	if len(i.params) > 0 {
-		params = i.params.Json()
-	}
-	if len(prefix)+len(params) > 0 {
-		sep = ":"
+		if colored {
+			params = "\x1b[0;36m" + i.params.Json() + "\x1b[0m"
+		} else {
+			params = i.params.Json()
+		}
 	}
 	var loglevel string
 	if colored {
@@ -38,7 +43,13 @@ func format(l Level, colored bool, s string, i *info) string {
 	} else {
 		loglevel = l.Prefix()
 	}
-	return fmt.Sprintf("[%s]%s%v%s %s", loglevel, prefix, params, sep, s)
+	if l != LevelUnknown {
+		loglevel = "[" + loglevel + "]"
+	}
+	if l == LevelInfo || l == LevelWarn {
+		loglevel += " "
+	}
+	return fmt.Sprintf("%s%s%v %s", loglevel, prefix, params, s)
 }
 
 type internal interface {

@@ -9,43 +9,70 @@ type BaseLogger struct {
 	*info
 }
 
-func (l *BaseLogger) Debug(a ...interface{}) {
+func (l *BaseLogger) Print(a ...any) {
+	l.log(LevelUnknown, fmt.Sprint(a...), l.info)
+}
+func (l *BaseLogger) Trace(a ...any) {
+	l.log(LevelTrace, fmt.Sprint(a...), l.info)
+}
+func (l *BaseLogger) Debug(a ...any) {
 	l.log(LevelDebug, fmt.Sprint(a...), l.info)
 }
-func (l *BaseLogger) Info(a ...interface{}) {
+func (l *BaseLogger) Info(a ...any) {
 	l.log(LevelInfo, fmt.Sprint(a...), l.info)
 }
-func (l *BaseLogger) Warn(a ...interface{}) {
+func (l *BaseLogger) Warn(a ...any) {
 	l.log(LevelWarn, fmt.Sprint(a...), l.info)
 }
-func (l *BaseLogger) Error(a ...interface{}) {
+func (l *BaseLogger) Error(a ...any) {
 	l.log(LevelError, fmt.Sprint(a...), l.info)
 }
+func (l *BaseLogger) Fatal(a ...any) {
+	l.log(LevelFatal, fmt.Sprint(a...), l.info)
+}
 
-func (l *BaseLogger) Debugf(format string, a ...interface{}) {
+func (l *BaseLogger) Printf(format string, a ...any) {
+	l.log(LevelUnknown, fmt.Sprintf(format, a...), l.info)
+}
+func (l *BaseLogger) Tracef(format string, a ...any) {
+	l.log(LevelTrace, fmt.Sprintf(format, a...), l.info)
+}
+func (l *BaseLogger) Debugf(format string, a ...any) {
 	l.log(LevelDebug, fmt.Sprintf(format, a...), l.info)
 }
-func (l *BaseLogger) Infof(format string, a ...interface{}) {
+func (l *BaseLogger) Infof(format string, a ...any) {
 	l.log(LevelInfo, fmt.Sprintf(format, a...), l.info)
 }
-func (l *BaseLogger) Warnf(format string, a ...interface{}) {
+func (l *BaseLogger) Warnf(format string, a ...any) {
 	l.log(LevelWarn, fmt.Sprintf(format, a...), l.info)
 }
-func (l *BaseLogger) Errorf(format string, a ...interface{}) {
+func (l *BaseLogger) Errorf(format string, a ...any) {
 	l.log(LevelError, fmt.Sprintf(format, a...), l.info)
 }
+func (l *BaseLogger) Fatalf(format string, a ...any) {
+	l.log(LevelFatal, fmt.Sprintf(format, a...), l.info)
+}
 
-func (l *BaseLogger) Debugln(a ...interface{}) {
+func (l *BaseLogger) Println(a ...any) {
+	l.log(LevelUnknown, fmt.Sprintln(a...), l.info)
+}
+func (l *BaseLogger) Tranceln(a ...any) {
+	l.log(LevelTrace, fmt.Sprintln(a...), l.info)
+}
+func (l *BaseLogger) Debugln(a ...any) {
 	l.log(LevelDebug, fmt.Sprintln(a...), l.info)
 }
-func (l *BaseLogger) Infoln(a ...interface{}) {
+func (l *BaseLogger) Infoln(a ...any) {
 	l.log(LevelInfo, fmt.Sprintln(a...), l.info)
 }
-func (l *BaseLogger) Warnln(a ...interface{}) {
+func (l *BaseLogger) Warnln(a ...any) {
 	l.log(LevelWarn, fmt.Sprintln(a...), l.info)
 }
-func (l *BaseLogger) Errorln(a ...interface{}) {
+func (l *BaseLogger) Errorln(a ...any) {
 	l.log(LevelError, fmt.Sprintln(a...), l.info)
+}
+func (l *BaseLogger) Fatalln(a ...any) {
+	l.log(LevelFatal, fmt.Sprintln(a...), l.info)
 }
 
 type loggerOuts map[string]LoggerOut
